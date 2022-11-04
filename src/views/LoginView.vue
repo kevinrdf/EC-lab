@@ -1,23 +1,39 @@
 <script>
+import spotifyAPI from "../utils/spotifyAPI";
+
 export default {
   name: "LoginView",
   methods: {
     signIn() {
-      return null;
+      spotifyAPI.spotifyLogin();
     },
   },
 };
 </script>
 
 <template>
-  <div
-    className="flex flex-col items-center bg-black min-h-screen w-full justify-center"
-  >
-    <img className="w-52 mb-5" src="https://links.papareact.com/9xl" alt="" />
+  <div class="login">
+    <img
+      width="100"
+      height="100"
+      class="spotify-logo"
+      src="../assets/spotifyLogo.png"
+      alt=""
+    />
     <div>
-      <button @click="signIn()">Login with {provider.name}</button>
+      <button type="button" class="btn btn-secondary" @click="signIn()">
+        Login with Spotify
+      </button>
     </div>
   </div>
 </template>
 
-<style></style>
+<style>
+.login {
+  text-align: center;
+}
+
+.spotify-logo {
+  margin: 10px;
+}
+</style>

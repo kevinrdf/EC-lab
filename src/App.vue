@@ -1,6 +1,9 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
+import { useUserStore } from "./stores/user";
+import router from "./router/index.js";
+import spotifyAPI from "./utils/spotifyAPI";
 
 export default {
   name: "App",
@@ -10,6 +13,20 @@ export default {
     RouterView,
   },
 };
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+  if (to.name === "loginCallback" && Object.keys(to.query).length) {
+    const code = to.query.code;
+    const accessToken = spotifyAPI.getAccessToken(code);
+    userStore.login("jpazos", accessToken);
+    return next({ name: "home" });
+  }
+
+  !userStore.isAuthenticated() && to.name !== "login"
+    ? next({ name: "login" })
+    : next();
+});
 </script>
 
 <template>
@@ -28,6 +45,7 @@ export default {
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/login">Login</RouterLink>
       </nav>
     </div>
   </header>
