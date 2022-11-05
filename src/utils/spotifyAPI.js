@@ -44,9 +44,10 @@ const getAccessToken = async (code) => {
 
   const data = await res.json();
   const userStore = useUserStore();
-  userStore.login("jpazos", data.access_token);
   spotifyApi.setAccessToken(data.access_token);
-  getArtistAlbums("43ZHCT0cAZBISjO8DG9PnE");
+  const userDetails = await spotifyApi.getMe();
+  userStore.login(userDetails.id, data.access_token);
+  getUserPlaylists(userDetails.id);
 };
 
 const getArtistAlbums = (id) => {
@@ -60,7 +61,33 @@ const getArtistAlbums = (id) => {
   );
 };
 
+const getUserPlaylists = () => {
+  const userStore = useUserStore();
+  return spotifyApi.getUserPlaylists(userStore.id).then(
+    function (data) {
+      return data;
+    },
+    function (err) {
+      console.error(err);
+    }
+  );
+};
+
+const getPlaylist = (id) => {
+  return spotifyApi.getPlaylist(id).then(
+    function (data) {
+      return data;
+    },
+    function (err) {
+      console.error(err);
+    }
+  );
+};
+
 export default {
   spotifyLogin,
   getAccessToken,
+  getArtistAlbums,
+  getUserPlaylists,
+  getPlaylist,
 };

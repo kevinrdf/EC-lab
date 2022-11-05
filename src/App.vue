@@ -40,12 +40,12 @@ router.beforeEach((to, from, next) => {
     />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld msg="Welcome to Spotify Clone" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
+        <RouterLink to="/main">Spotify Main</RouterLink>
       </nav>
     </div>
   </header>

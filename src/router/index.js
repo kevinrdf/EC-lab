@@ -27,6 +27,11 @@ const router = createRouter({
       name: "loginCallback",
       component: () => import("../views/LoginCallbackView.vue"),
     },
+    {
+      path: "/main",
+      name: "main",
+      component: () => import("../views/MainView.vue"),
+    },
   ],
 });
 

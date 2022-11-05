@@ -3,13 +3,13 @@ import { defineStore, acceptHMRUpdate } from "pinia";
 export const useUserStore = defineStore({
   id: "user",
   state: () => ({
-    name: "",
+    id: "",
     accessToken: "",
   }),
 
   actions: {
     logout() {
-      this.name = "";
+      this.id = "";
       this.accessToken = "";
       // we could do other stuff like redirecting the user
     },
@@ -17,12 +17,12 @@ export const useUserStore = defineStore({
      * Attempt to login a user
      * @param {string} user
      */
-    async login(name, accessToken) {
-      this.name = name;
+    async login(id, accessToken) {
+      this.id = id;
       this.accessToken = accessToken;
     },
     isAuthenticated() {
-      return this.name !== "" && this.accessToken !== "";
+      return this.id !== "" && this.accessToken !== "";
     },
   },
 });
