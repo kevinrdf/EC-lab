@@ -1,7 +1,16 @@
 <script>
 export default {
   name: "SongComponent",
-  props: ["name", "num", "album", "added", "duration", "img"],
+  props: [
+    "name",
+    "num",
+    "album",
+    "added",
+    "duration",
+    "img",
+    "artist",
+    "artistId",
+  ],
   methods: {},
   created() {},
 };
@@ -12,7 +21,15 @@ export default {
     <td>{{ num }}</td>
     <td class="title">
       <img class="image" width="50" height="50" :src="img" />
-      <div class="underline">{{ name }}</div>
+      <div>
+        <p class="underline">{{ name }}</p>
+        <p
+          @click="this.$router.push({ path: `/artists/${artistId}` })"
+          class="underline"
+        >
+          {{ artist }}
+        </p>
+      </div>
     </td>
     <td>
       <div class="underline">{{ album }}</div>
@@ -29,6 +46,10 @@ export default {
 
 tr:hover {
   cursor: pointer;
+}
+
+p.underline:hover {
+  text-decoration: underline;
 }
 
 div.underline:hover {

@@ -6,7 +6,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="album">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -26,7 +26,7 @@ export default {
     </svg>
     Home
   </div>
-  <div>
+  <div class="album">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -41,7 +41,7 @@ export default {
     </svg>
     Search
   </div>
-  <div>
+  <div class="album">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -57,7 +57,7 @@ export default {
     Your Library
   </div>
   <hr />
-  <div>
+  <div class="album">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -75,7 +75,7 @@ export default {
     </svg>
     Create Playlist
   </div>
-  <div class="liked-songs">
+  <div class="liked-songs album">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -91,7 +91,7 @@ export default {
     </svg>
     Liked Songs
   </div>
-  <div class="your-episodes">
+  <div class="your-episodes album">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"

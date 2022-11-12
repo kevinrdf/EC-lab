@@ -50,10 +50,23 @@ const getAccessToken = async (code) => {
   getUserPlaylists(userDetails.id);
 };
 
+const getUser = () => {
+  const userStore = useUserStore();
+  return spotifyApi.getUser(userStore.id).then(
+    function (data) {
+      return data;
+    },
+    function (err) {
+      console.error(err);
+    }
+  );
+};
+
 const getArtistAlbums = (id) => {
-  spotifyApi.getArtistAlbums(id).then(
+  return spotifyApi.getArtistAlbums(id).then(
     function (data) {
       console.log("Artist albums", data);
+      return data;
     },
     function (err) {
       console.error(err);
@@ -90,4 +103,5 @@ export default {
   getArtistAlbums,
   getUserPlaylists,
   getPlaylist,
+  getUser,
 };

@@ -4,9 +4,13 @@ import HelloWorld from "./components/HelloWorld.vue";
 import { useUserStore } from "./stores/user";
 import router from "./router/index.js";
 import spotifyAPI from "./utils/spotifyAPI";
+import { mapStores } from "pinia";
 
 export default {
   name: "App",
+  computed: {
+    ...mapStores(useUserStore),
+  },
   components: {
     HelloWorld,
     RouterLink,
@@ -16,11 +20,15 @@ export default {
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
+  if (to.name === "logout" && userStore.isAuthenticated()) {
+    userStore.logout();
+    return next({ name: "login" });
+  }
   if (to.name === "loginCallback" && Object.keys(to.query).length) {
     const code = to.query.code;
     const accessToken = spotifyAPI.getAccessToken(code);
     userStore.login("jpazos", accessToken);
-    return next({ name: "home" });
+    return next({ name: "about" });
   }
 
   !userStore.isAuthenticated() && to.name !== "login"
@@ -44,8 +52,11 @@ router.beforeEach((to, from, next) => {
 
       <nav>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
         <RouterLink to="/main">Spotify Main</RouterLink>
+        <RouterLink to="/user">Profile</RouterLink>
+        <RouterLink v-if="this.userStore.isAuthenticated()" to="/logout"
+          >Logout</RouterLink
+        >
       </nav>
     </div>
   </header>

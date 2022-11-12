@@ -10,12 +10,16 @@ export default {
     LeftComponent,
   },
   methods: {
-    signIn() {
-      spotifyAPI.spotifyLogin();
-    },
     async updateCurrentTracks(playlistId) {
       const tracks = await spotifyAPI.getPlaylist(playlistId);
       this.currentTracks = tracks.tracks.items;
+    },
+    toMinutesAndSeconds(millis) {
+      const minutes = Math.floor(millis / 60000);
+      const seconds = ((millis % 60000) / 1000).toFixed(0);
+      return seconds == 60
+        ? minutes + 1 + ":00"
+        : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     },
   },
   data() {
@@ -79,8 +83,16 @@ export default {
             :name="trackObject.track.name"
             :album="trackObject.track.album.name"
             :img="trackObject.track.album.images[0].url"
-            :added="trackObject.added_at"
-            :duration="trackObject.track.duration_ms"
+            :added="
+              new Date(trackObject.added_at)
+                .toString()
+                .split(' ')
+                .splice(0, 4)
+                .join(' ')
+            "
+            :artist="trackObject.track.artists[0].name"
+            :artistId="trackObject.track.artists[0].id"
+            :duration="toMinutesAndSeconds(trackObject.track.duration_ms)"
           ></SongComponent>
         </tbody>
       </table>
